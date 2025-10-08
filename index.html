@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matthew Keller - Computer Science Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #9333ea;
+            --primary-dark: #7e22ce;
+            --secondary: #64748b;
+            --dark: #1e1b4b;
+            --light: #faf5ff;
+            --accent: #a855f7;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(30, 27, 75, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        .mobile-menu {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: var(--primary);
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.1;
+            top: -250px;
+            right: -250px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #cbd5e1;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.6s backwards;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--dark);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: var(--dark);
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            margin: 1rem auto;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
+        .contact-info {
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .contact-info p {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contact-info strong {
+            color: var(--dark);
+            min-width: 80px;
+        }
+
+        /* Experience Section */
+        .experience-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .experience-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid var(--primary);
+        }
+
+        .experience-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .experience-title h3 {
+            color: var(--dark);
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .experience-company {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .experience-date {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .experience-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .experience-card li {
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            color: var(--secondary);
+        }
+
+        .experience-card li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Education Section */
+        .education-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .education-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--accent);
+        }
+
+        .education-card h3 {
+            color: var(--dark);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .education-card .degree {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .education-card .date {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .skill-category h3 {
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .skill-tag {
+            background: var(--light);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            color: var(--dark);
+            font-size: 0.9rem;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .skill-tag:hover {
+            border-color: var(--primary);
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-card h3 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .project-card p {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s, transform 0.6s;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--dark);
+                padding: 1rem;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .experience-header {
+                flex-direction: column;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="logo">MK</div>
+            <button class="mobile-menu" onclick="toggleMenu()">☰</button>
+            <ul id="navMenu">
+                <li><a href="#home" onclick="closeMenu()">Home</a></li>
+                <li><a href="#about" onclick="closeMenu()">About</a></li>
+                <li><a href="#experience" onclick="closeMenu()">Experience</a></li>
+                <li><a href="#education" onclick="closeMenu()">Education</a></li>
+                <li><a href="#skills" onclick="closeMenu()">Skills</a></li>
+                <li><a href="#projects" onclick="closeMenu()">Projects</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Matthew Keller</h1>
+            <p class="subtitle">Computer Science Student & DevOps Developer</p>
+            <p>Building innovative solutions with modern technologies and pursuing excellence in software development</p>
+            <div class="cta-buttons">
+                    <a href="#experience" class="btn btn-primary">View My Work</a>
+                    <a href="https://github.com/eyeSprites" target="_blank" class="btn btn-secondary">GitHub Profile</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2>About Me</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>I'm a Computer Science student at Monmouth University with hands-on experience in DevOps and full-stack development. Currently expected to graduate in Fall 2026, I've gained valuable industry experience through multiple internships at Iconectiv.</p>
+                <p>My passion lies in creating efficient, scalable solutions and automating processes. I've worked with modern technologies including Ruby, AWS services, Jenkins, and various database systems to build robust applications and dashboards.</p>
+                <p>When I'm not coding, I enjoy exploring new technologies and contributing to open-source projects on GitHub.</p>
+            </div>
+            <div class="contact-info">
+                <h3 style="margin-bottom: 1.5rem; color: var(--dark);">Get In Touch</h3>
+                <p><strong>Location:</strong> Howell, NJ 07731</p>
+                <p><strong>Phone:</strong> (732) 664-4665</p>
+                <p><strong>Email:</strong> <a href="mailto:mtk2002@optonline.net" style="color: var(--primary); text-decoration: none;">mtk2002@optonline.net</a></p>
+                <p><strong>GitHub:</strong> <a href="https://github.com/eyeSprites" target="_blank" style="color: var(--primary); text-decoration: none;">eyeSprites</a></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <h2>Experience</h2>
+        <div class="experience-grid">
+            <div class="experience-card fade-in">
+                <div class="experience-header">
+                    <div class="experience-title">
+                        <h3>DevOps Intern</h3>
+                        <p class="experience-company">Iconectiv - Bridgewater, NJ</p>
+                    </div>
+                    <div class="experience-date">May 2023 - Aug 2023 | May 2024 - Aug 2024 | May 2025 - Aug 2025</div>
+                </div>
+                <ul>
+                    <li>Developed front-end and back-end components for Ruby dashboards</li>
+                    <li>Implemented DynamoDB tables to store and manage data from Jenkins jobs</li>
+                    <li>Created automated services using Jenkins API for pulling data from various sources</li>
+                    <li>Collaborated with cross-functional teams to improve DevOps workflows</li>
+                </ul>
+            </div>
+
+            <div class="experience-card fade-in">
+                <div class="experience-header">
+                    <div class="experience-title">
+                        <h3>Floor Associate</h3>
+                        <p class="experience-company">Ace Hardware - Manasquan, NJ</p>
+                    </div>
+                    <div class="experience-date">March 2021 - Present</div>
+                </div>
+                <ul>
+                    <li>Maintained inventory and stocked shelves efficiently</li>
+                    <li>Provided excellent customer service and product assistance</li>
+                    <li>Operated cash register and handled transactions accurately</li>
+                </ul>
+            </div>
+
+            <div class="experience-card fade-in">
+                <div class="experience-header">
+                    <div class="experience-title">
+                        <h3>Floor Associate</h3>
+                        <p class="experience-company">Party City - Howell, NJ</p>
+                    </div>
+                    <div class="experience-date">October 2017 - January 2021</div>
+                </div>
+                <ul>
+                    <li>Managed shelf stocking and inventory organization</li>
+                    <li>Processed customer orders and transactions</li>
+                    <li>Handled cash register operations with accuracy</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="education">
+        <h2>Education</h2>
+        <div class="education-grid">
+            <div class="education-card fade-in">
+                <h3>Monmouth University</h3>
+                <p class="degree">Bachelor's in Computer Science</p>
+                <p class="date">January 2025 - Present (Expected Graduation: Fall 2026)</p>
+                <p style="color: var(--secondary); margin-top: 1rem;">Long Branch, NJ</p>
+            </div>
+
+            <div class="education-card fade-in">
+                <h3>Brookdale Community College</h3>
+                <p class="degree">Associate Degree</p>
+                <p class="date">September 2021 - December 2024</p>
+                <p style="color: var(--secondary); margin-top: 1rem;">Lincroft, NJ</p>
+            </div>
+
+            <div class="education-card fade-in">
+                <h3>Howell High School</h3>
+                <p class="degree">High School Diploma</p>
+                <p class="date">September 2018 - June 2021</p>
+                <p style="color: var(--secondary); margin-top: 1rem;">Farmingdale, NJ</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2>Technical Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-category fade-in">
+                <h3>Programming Languages</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Java</span>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">Ruby</span>
+                    <span class="skill-tag">C++</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">SQL</span>
+                </div>
+            </div>
+
+            <div class="skill-category fade-in">
+                <h3>Web Technologies</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">HTML</span>
+                    <span class="skill-tag">CSS</span>
+                    <span class="skill-tag">Tailwind CSS</span>
+                    <span class="skill-tag">JavaScript</span>
+                </div>
+            </div>
+
+            <div class="skill-category fade-in">
+                <h3>Database & Cloud</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">MongoDB</span>
+                    <span class="skill-tag">DynamoDB</span>
+                    <span class="skill-tag">AWS S3</span>
+                </div>
+            </div>
+
+            <div class="skill-category fade-in">
+                <h3>Tools & DevOps</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Jenkins Pipeline</span>
+                    <span class="skill-tag">Unity</span>
+                    <span class="skill-tag">Git</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card fade-in">
+                <div class="project-content">
+                    <h3>Eye</h3>
+                    <p>Explore my project repositories and contributions on GitHub. Check out my work in various programming languages and technologies.</p>
+                    <a href="https://github.com/eyeSprites" target="_blank" class="btn btn-primary">View on GitHub</a>
+                </div>
+            </div>
+
+            <div class="project-card fade-in">
+                <div class="project-content">
+                    <h3>DevOps Dashboards</h3>
+                    <p>Built interactive Ruby dashboards with front-end and back-end components during my internship at Iconectiv, integrating Jenkins API and DynamoDB.</p>
+                </div>
+            </div>
+
+            <div class="project-card fade-in">
+                <div class="project-content">
+                    <h3>Automation Services</h3>
+                    <p>Developed automated services using Jenkins API to pull and process data from multiple sources, improving workflow efficiency.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Matthew Keller. All rights reserved.</p>
+        <p style="margin-top: 0.5rem;">
+            <a href="https://github.com/eyeSprites" target="_blank" style="color: var(--accent); text-decoration: none; margin: 0 1rem;">GitHub</a>
+            <a href="mailto:mtk2002@optonline.net" style="color: var(--accent); text-decoration: none; margin: 0 1rem;">Email</a>
+        </p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            menu.classList.toggle('active');
+        }
+
+        function closeMenu() {
+            const menu = document.getElementById('navMenu');
+            menu.classList.remove('active');
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Active nav link on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.style.color = 'white';
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.style.color = 'var(--accent)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
